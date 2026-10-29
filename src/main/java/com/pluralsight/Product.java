@@ -44,4 +44,9 @@ public class Product {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%-8s %-40s %.2f", this.id, this.productName, this.price);
+    }
 }
