@@ -65,6 +65,7 @@ public class Store {
     public static void loadInventory(String fileName, ArrayList<Product> inventory) {
         // TODO: skip the header line, then read each line, split on "|",
         //       create a Product object, and add it to the inventory list
+
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line = reader.readLine(); // skip header
