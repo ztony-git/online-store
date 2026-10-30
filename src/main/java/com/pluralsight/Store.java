@@ -149,6 +149,8 @@ public class Store {
                 }
             }
         } while (!in.equalsIgnoreCase("B"));
+
+        printDivider();
     }
 
     /**
@@ -161,6 +163,40 @@ public class Store {
         //   • compute the total cost
         //   • ask the user whether to check out (C) or return (X)
         //   • if C, call checkOut(cart, totalAmount, scanner)
+        printDivider();
+        printProductHeader();
+
+        // calculate total cost of items
+        double total = 0;
+        for (Product product : cart) {
+            System.out.println(product);
+            total+=product.getPrice();
+        }
+        System.out.printf("Total Price: $%.2f%n", total);
+
+        String in;
+
+        do {
+            if (cart.isEmpty()) { // return to homescreen immediately if nothing to check out
+                break;
+            }
+
+            printDivider();
+            System.out.print("C - Check Out, B - Back: ");
+            in = scanner.nextLine();
+
+            switch (in.toLowerCase()) { // asks customer for change, if sufficient, checks them out
+                case "c" -> {
+                    checkOut(cart, total, scanner);
+                }
+                case "b" -> {}
+                default -> {
+                    System.out.println("Invalid input!");
+                }
+            }
+        } while (!in.equalsIgnoreCase("B"));
+
+        printDivider();
     }
 
     /**
@@ -174,6 +210,28 @@ public class Store {
                                 double totalAmount,
                                 Scanner scanner) {
         // TODO: implement steps listed above
+        try {
+            System.out.printf("Amount owed: $%.2f. Cash: ", totalAmount);
+            double payment = scanner.nextDouble();
+            scanner.nextLine();
+
+            if (payment >= totalAmount) {
+                double change = payment - totalAmount;
+
+                System.out.printf("Change: $%.2f%n", change);
+                System.out.println("Receipt: ");
+                for  (Product product : cart) {
+                    System.out.printf("%s %.2f%n", product.getProductName(), product.getPrice());
+                }
+                System.out.printf("Change given: $%.2f%n", change);
+
+                cart.clear();
+            } else {
+                System.out.println("Insufficient funds!");
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input!");
+        }
     }
 
     /**
