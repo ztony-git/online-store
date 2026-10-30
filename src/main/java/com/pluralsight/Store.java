@@ -54,6 +54,10 @@ public class Store {
         scanner.close();
     }
 
+    public static void printDivider() {
+        System.out.println("---------------------------------------------");
+    }
+
     /**
      * Reads product data from a file and populates the inventory list.
      * File format (pipe-delimited), the first line is a header row:
