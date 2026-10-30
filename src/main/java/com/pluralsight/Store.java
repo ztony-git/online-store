@@ -116,7 +116,7 @@ public class Store {
 
             switch (in.toLowerCase()) {
                 case "s" -> { // display product searched by SKU
-                    // find product
+                    // prompt product id
                     System.out.print("Enter the SKU: ");
                     String id = scanner.nextLine();
                     Product prod = findProductById(id, inventory);
@@ -130,7 +130,18 @@ public class Store {
                     }
                 }
                 case "a" -> { //
+                    // prompt product id
+                    System.out.print("Enter the SKU: ");
+                    String id = scanner.nextLine();
+                    Product prod = findProductById(id, inventory);
 
+                    // add to cart
+                    if(prod != null) {
+                        System.out.println(prod.getProductName() + " added to your cart.");
+                        cart.add(prod);
+                    } else {
+                        System.out.println("Invalid SKU!");
+                    }
                 }
                 case "b" -> {
                     break;
