@@ -143,9 +143,7 @@ public class Store {
                         System.out.println("Invalid SKU!");
                     }
                 }
-                case "b" -> {
-                    break;
-                }
+                case "b" -> {}
                 default -> {
                     System.out.println("Invalid input!");
                 }
