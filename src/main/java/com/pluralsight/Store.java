@@ -3,6 +3,7 @@ package com.pluralsight;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -58,6 +59,10 @@ public class Store {
         System.out.println("---------------------------------------------");
     }
 
+    public static void printProductHeader() {
+        System.out.printf("%-8s %-40s %s%n", "SKU", "Product Name", "Price");
+    }
+
     /**
      * Reads product data from a file and populates the inventory list.
      * File format (pipe-delimited), the first line is a header row:
@@ -97,10 +102,44 @@ public class Store {
         //       prompt for an id, find that product, add to cart
 
         // display products
-        System.out.printf("%-8s %-40s %s%n", "SKU", "Product Name", "Price");
+        printProductHeader();
         for(Product product : inventory) {
             System.out.println(product);
         }
+
+        String in;
+
+        do {
+            printDivider();
+            System.out.print("S - Search by SKU, A - Add to cart, B - Back: ");
+            in = scanner.nextLine();
+
+            switch (in.toLowerCase()) {
+                case "s" -> { // display product searched by SKU
+                    // find product
+                    System.out.print("Enter the SKU: ");
+                    String id = scanner.nextLine();
+                    Product prod = findProductById(id, inventory);
+
+                    // display product
+                    if(prod != null) {
+                        printProductHeader();
+                        System.out.println(prod);
+                    } else {
+                        System.out.println("Invalid SKU!");
+                    }
+                }
+                case "a" -> { //
+
+                }
+                case "b" -> {
+                    break;
+                }
+                default -> {
+                    System.out.println("Invalid input!");
+                }
+            }
+        } while (!in.equalsIgnoreCase("B"));
     }
 
     /**
@@ -135,6 +174,12 @@ public class Store {
      */
     public static Product findProductById(String id, ArrayList<Product> inventory) {
         // TODO: loop over the list and compare ids
+        for (Product product : inventory) {
+            if (product.getId().equals(id)) {
+                return product;
+            }
+        }
+
         return null;
     }
 }
