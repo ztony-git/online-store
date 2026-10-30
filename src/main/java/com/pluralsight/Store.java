@@ -1,9 +1,8 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -227,10 +226,25 @@ public class Store {
 
                 System.out.printf("Change: $%.2f%n", change);
                 System.out.println("Receipt: ");
-                for  (Product product : cart) {
-                    System.out.printf("%s %.2f%n", product.getProductName(), product.getPrice());
+
+                // print receipt
+                try {
+                    LocalDateTime now = LocalDateTime.now();
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
+                    File file = new File("receipts/" + now.format(dtf) + ".txt"); // get directory and filename
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+                    for  (Product product : cart) {
+                        System.out.printf("%s %.2f%n", product.getProductName(), product.getPrice());
+                        writer.write(product.getProductName() + " " + String.format("%.2f", product.getPrice()) + "\n");
+                    }
+                    System.out.printf("Change given: $%.2f%n", change);
+                    writer.write("Change given: " + String.format("%.2f", change));
+
+                    writer.close();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
-                System.out.printf("Change given: $%.2f%n", change);
 
                 cart.clear();
             } else {
