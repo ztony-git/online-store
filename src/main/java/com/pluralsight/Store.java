@@ -1,10 +1,10 @@
 package com.pluralsight;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
+import java.io.FileWriter;
+import java.util.*;
 
 /**
  * Starter code for the Online Store workshop.
@@ -164,12 +164,19 @@ public class Store {
         //   • ask the user whether to check out (C) or return (X)
         //   • if C, call checkOut(cart, totalAmount, scanner)
         printDivider();
+        System.out.printf("%-10s", "Quantity");
         printProductHeader();
+
+        // accumulates total amount of each item
+        Map<Product, Integer> productIntegerMap = new HashMap<>();
+        for (Product product : cart) {
+            productIntegerMap.put(product, productIntegerMap.getOrDefault(product, 0) + 1);
+        }
 
         // calculate total cost of items
         double total = 0;
-        for (Product product : cart) {
-            System.out.println(product);
+        for (Product product : productIntegerMap.keySet()) {
+            System.out.printf("%-10d%s%n", productIntegerMap.get(product), product);
             total+=product.getPrice();
         }
         System.out.printf("Total Price: $%.2f%n", total);
