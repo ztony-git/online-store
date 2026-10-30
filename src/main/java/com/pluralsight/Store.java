@@ -222,7 +222,7 @@ public class Store {
             double payment = scanner.nextDouble();
             scanner.nextLine();
 
-            if (payment >= totalAmount) {
+            if (payment >= totalAmount) { // check if payment pays total
                 double change = payment - totalAmount;
 
                 System.out.printf("Change: $%.2f%n", change);
